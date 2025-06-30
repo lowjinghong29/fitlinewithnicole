@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FitLine with Nicole</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Lato:wght@400;700&family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <!-- AOS Animation CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/aos@2.3.4/dist/aos.css" />
+    <!-- TailwindCSS CDN (for demo, use CDN) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      :root {
+        --fitline-red: #d91e49;
+        --pm-blue: #004481;
+        --light-gray: #eaeaea;
+        --white: #fff;
+        --black: #000;
+        --beige: #f5f5f5;
+      }
+      body {
+        font-family: 'Poppins', 'Lato', 'Montserrat', Arial, sans-serif;
+        background: var(--beige);
+        color: var(--black);
+      }
+      .shadow-card {
+        box-shadow: 0 4px 24px 0 rgba(0,0,0,0.08);
+      }
+      .hover-scale {
+        transition: transform 0.25s cubic-bezier(.4,0,.2,1), box-shadow 0.25s;
+      }
+      .hover-scale:hover {
+        transform: scale(1.04);
+        box-shadow: 0 8px 32px 0 rgba(217,30,73,0.15);
+      }
+      .sticky-social {
+        position: fixed;
+        bottom: 2rem;
+        right: 2rem;
+        z-index: 50;
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+        transform: none;
+      }
+      .sticky-social a {
+        background: var(--white);
+        border-radius: 50%;
+        box-shadow: 0 2px 8px 0 rgba(0,0,0,0.10);
+        width: 88px;
+        height: 88px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: box-shadow 0.2s, transform 0.2s;
+      }
+      .sticky-social a img {
+        width: 54px;
+        height: 54px;
+        object-fit: contain;
+        display: block;
+      }
+      .sticky-social a:hover {
+        box-shadow: 0 4px 16px 0 var(--fitline-red);
+        transform: scale(1.12);
+      }
+      /* Responsive fixes */
+      @media (max-width: 1024px) {
+        .sticky-social { right: 0.5rem; bottom: 1rem; }
+      }
+      @media (max-width: 768px) {
+        .sticky-social { display: none; }
+      }
+      @keyframes fadeIn { from { opacity: 0; transform: scale(0.96);} to { opacity: 1; transform: scale(1);} }
+      .animate-fadeIn { animation: fadeIn 0.25s; }
+    </style>
+</head>
+<body class="bg-[#f5f5f5]">
+    <!-- Sticky Social Icons -->
+    <div class="sticky-social fixed right-3 bottom-3 z-50 flex flex-col gap-3 md:right-6 md:bottom-6">
+      <div class="relative group">
+        <a href="https://www.pmebusiness.com/registrationv2/?TP=3043733" target="_blank" class="bg-white rounded-full shadow p-2 flex items-center justify-center w-12 h-12 md:w-14 md:h-14 hover:scale-105 transition"><img src="media/cart.png" alt="Shop" class="w-7 h-7 md:w-8 md:h-8"></a>
+        <div class="absolute right-full top-1/2 -translate-y-1/2 mr-3 px-3 py-2 bg-[#004481] text-white text-xs rounded-lg shadow opacity-0 group-hover:opacity-100 transition pointer-events-none whitespace-nowrap z-50">Navigate to purchase page</div>
+      </div>
+      <div class="relative group">
+        <a href="https://wa.link/g4eg2o" target="_blank" class="bg-white rounded-full shadow p-2 flex items-center justify-center w-12 h-12 md:w-14 md:h-14 hover:scale-105 transition"><img src="media/whatsappicon.png" alt="WhatsApp" class="w-7 h-7 md:w-8 md:h-8"></a>
+        <div class="absolute right-full top-1/2 -translate-y-1/2 mr-3 px-3 py-2 bg-[#25d366] text-white text-xs rounded-lg shadow opacity-0 group-hover:opacity-100 transition pointer-events-none whitespace-nowrap z-50">Contact us on WhatsApp!</div>
+      </div>
+    </div>
+
+    <!-- Navigation Bar -->
+    <nav class="w-full bg-white shadow-md fixed top-0 left-0 z-40">
+      <div class="max-w-7xl mx-auto flex items-center justify-between px-4 py-3">
+        <div class="flex items-center gap-2">
+          <img src="media/logo_fitline.png" alt="FitLine Logo" class="h-8 w-auto">
+          <span class="font-bold text-lg text-[#d91e49] tracking-wide">FitLine with Nicole</span>
+        </div>
+        <ul class="hidden md:flex gap-8 font-semibold text-[#004481]">
+          <li><a href="#home" class="hover:text-[#d91e49]">Home</a></li>
+          <li><a href="#about" class="hover:text-[#d91e49]">About</a></li>
+          <li><a href="#products" class="hover:text-[#d91e49]">Products</a></li>
+          <li><a href="#awards" class="hover:text-[#d91e49]">Awards</a></li>
+          <li><a href="#certifications" class="hover:text-[#d91e49]">Certifications</a></li>
+          <li><a href="#contact" class="hover:text-[#d91e49]">Contact</a></li>
+        </ul>
+        <!-- Hamburger -->
+        <button id="menu-btn" class="md:hidden flex flex-col gap-1.5 focus:outline-none" aria-label="Open menu">
+          <span class="w-7 h-1 bg-[#d91e49] rounded"></span>
+          <span class="w-7 h-1 bg-[#d91e49] rounded"></span>
+          <span class="w-7 h-1 bg-[#d91e49] rounded"></span>
+        </button>
+      </div>
+      <div id="mobile-menu" class="md:hidden hidden w-full left-0 top-0 fixed z-50 bg-black bg-opacity-40 min-h-screen flex items-start justify-end animate-fadeIn">
+        <div class="w-11/12 max-w-xs bg-white rounded-2xl shadow-2xl mt-4 mr-4 p-6 flex flex-col gap-6 border border-[#eaeaea]">
+          <div class="flex justify-between items-center mb-2">
+            <span class="font-bold text-lg text-[#d91e49] tracking-wide">Menu</span>
+            <button id="mobile-menu-close" class="text-2xl text-[#d91e49] hover:text-[#004481] focus:outline-none">&times;</button>
+          </div>
+          <ul class="flex flex-col gap-5 items-center">
+            <li class="w-full flex justify-center"><a href="#home" class="mobile-menu-link w-full text-center px-6 py-4 rounded-2xl font-semibold text-[#004481] text-lg bg-[#f7f8fa] hover:bg-[#d91e49] hover:text-white transition shadow-md mb-1">Home</a></li>
+            <li class="w-full flex justify-center"><a href="#about" class="mobile-menu-link w-full text-center px-6 py-4 rounded-2xl font-semibold text-[#004481] text-lg bg-[#f7f8fa] hover:bg-[#d91e49] hover:text-white transition shadow-md mb-1">About</a></li>
+            <li class="w-full flex justify-center"><a href="#products" class="mobile-menu-link w-full text-center px-6 py-4 rounded-2xl font-semibold text-[#004481] text-lg bg-[#f7f8fa] hover:bg-[#d91e49] hover:text-white transition shadow-md mb-1">Products</a></li>
+            <li class="w-full flex justify-center"><a href="#awards" class="mobile-menu-link w-full text-center px-6 py-4 rounded-2xl font-semibold text-[#004481] text-lg bg-[#f7f8fa] hover:bg-[#d91e49] hover:text-white transition shadow-md mb-1">Awards</a></li>
+            <li class="w-full flex justify-center"><a href="#certifications" class="mobile-menu-link w-full text-center px-6 py-4 rounded-2xl font-semibold text-[#004481] text-lg bg-[#f7f8fa] hover:bg-[#d91e49] hover:text-white transition shadow-md mb-1">Certifications</a></li>
+            <li class="w-full flex justify-center"><a href="#contact" class="mobile-menu-link w-full text-center px-6 py-4 rounded-2xl font-semibold text-[#004481] text-lg bg-[#f7f8fa] hover:bg-[#d91e49] hover:text-white transition shadow-md mb-1">Contact</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <div class="h-16 md:h-20"></div>
+
+    <!-- Hero Section -->
+    <section id="home" class="relative w-full flex items-center justify-center bg-white overflow-hidden min-h-[0] md:min-h-0 p-0 m-0 md:pt-0 md:mt-0">
+      <img src="media/logo_fitline.png" alt="FitLine Logo" class="absolute left-2 top-2 w-16 h-16 md:left-8 md:top-8 md:w-32 md:h-32 opacity-10 pointer-events-none select-none" style="z-index:1;">
+      <div class="relative z-10 flex flex-col items-center justify-center w-full">
+        <!-- Carousel Start -->
+        <div id="carousel" class="w-full rounded-none sm:rounded-3xl shadow-card overflow-hidden bg-white flex flex-col items-center justify-center md:rounded-none md:shadow-none md:bg-white md:w-full md:mx-0 md:px-0">
+          <div class="relative w-full h-[220px] sm:h-[320px] md:h-[750px] lg:h-[900px] flex items-center justify-center md:rounded-none md:mx-0 md:px-0">
+            <button id="carousel-prev" aria-label="Previous" class="absolute left-2 top-1/2 -translate-y-1/2 bg-white bg-opacity-80 rounded-full shadow p-2 z-20 hover:bg-[#d91e49] hover:text-white transition hidden sm:block">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" /></svg>
+            </button>
+            <div id="carousel-track" class="w-full h-full flex transition-transform duration-700 ease-in-out">
+              <img src="media/fitness1.png" alt="Fitness" class="w-full h-full select-none object-cover md:object-contain md:w-full md:h-full" style="min-width:100vw;max-width:100vw;object-fit:cover;" />
+              <img src="media/music1.png" alt="Music" class="w-full h-full select-none object-cover md:object-contain md:w-full md:h-full" style="min-width:100vw;max-width:100vw;object-fit:cover;" />
+            </div>
+            <button id="carousel-next" aria-label="Next" class="absolute right-2 top-1/2 -translate-y-1/2 bg-white bg-opacity-80 rounded-full shadow p-2 z-20 hover:bg-[#d91e49] hover:text-white transition hidden sm:block">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg>
+            </button>
+          </div>
+          <div class="flex justify-center items-center gap-2 py-4">
+            <span class="carousel-dot w-3 h-3 rounded-full bg-[#d91e49] opacity-80 cursor-pointer transition"></span>
+            <span class="carousel-dot w-3 h-3 rounded-full bg-[#d91e49] opacity-30 cursor-pointer transition"></span>
+          </div>
+        </div>
+        <!-- Carousel End -->
+      </div>
+    </section>
+    <script>
+      // Carousel logic
+      const images = [
+        'media/fitness1.png',
+        'media/music1.png'
+      ];
+      let current = 0;
+      const intervalTime = 5000; // ms
+      let carouselInterval;
+      const track = document.getElementById('carousel-track');
+      const dots = document.getElementsByClassName('carousel-dot');
+      function updateCarousel(idx) {
+        track.style.transform = `translateX(-${idx * 100}vw)`;
+        for (let i = 0; i < dots.length; i++) {
+          dots[i].style.opacity = i === idx ? '0.8' : '0.3';
+        }
+      }
+      function nextSlide() {
+        current = (current + 1) % images.length;
+        updateCarousel(current);
+      }
+      function prevSlide() {
+        current = (current - 1 + images.length) % images.length;
+        updateCarousel(current);
+      }
+      function goToSlide(idx) {
+        current = idx;
+        updateCarousel(current);
+      }
+      document.getElementById('carousel-next').onclick = nextSlide;
+      document.getElementById('carousel-prev').onclick = prevSlide;
+      for (let i = 0; i < dots.length; i++) {
+        dots[i].onclick = () => goToSlide(i);
+      }
+      function startCarousel() {
+        carouselInterval = setInterval(nextSlide, intervalTime);
+      }
+      function stopCarousel() {
+        clearInterval(carouselInterval);
+      }
+      // Pause on hover (desktop)
+      document.getElementById('carousel').addEventListener('mouseenter', stopCarousel);
+      document.getElementById('carousel').addEventListener('mouseleave', startCarousel);
+      // Responsive: show/hide arrows
+      function handleResize() {
+        const prev = document.getElementById('carousel-prev');
+        const next = document.getElementById('carousel-next');
+        if (window.innerWidth < 640) {
+          prev.classList.add('hidden');
+          next.classList.add('hidden');
+        } else {
+          prev.classList.remove('hidden');
+          next.classList.remove('hidden');
+        }
+      }
+      window.addEventListener('resize', handleResize);
+      handleResize();
+      updateCarousel(current);
+      startCarousel();
+      // Hamburger menu fix and enhancements
+      (function() {
+        var menuBtn = document.getElementById('menu-btn');
+        var mobileMenu = document.getElementById('mobile-menu');
+        var mobileMenuPanel = mobileMenu.querySelector('div');
+        var closeBtn = document.getElementById('mobile-menu-close');
+        var mobileMenuLinks = document.querySelectorAll('#mobile-menu .mobile-menu-link');
+        var isMenuOpen = false;
+
+        function openMenu() {
+          mobileMenu.classList.remove('hidden');
+          isMenuOpen = true;
+          setTimeout(() => {
+            document.addEventListener('click', handleOutsideClick);
+          }, 0);
+        }
+        function closeMenu() {
+          mobileMenu.classList.add('hidden');
+          isMenuOpen = false;
+          document.removeEventListener('click', handleOutsideClick);
+        }
+        function handleOutsideClick(e) {
+          if (!mobileMenuPanel.contains(e.target) && e.target !== menuBtn) {
+            closeMenu();
+          }
+        }
+        if (menuBtn && mobileMenu) {
+          menuBtn.addEventListener('click', function(e) {
+            e.stopPropagation();
+            if (mobileMenu.classList.contains('hidden')) {
+              openMenu();
+            } else {
+              closeMenu();
+            }
+          });
+          if (closeBtn) {
+            closeBtn.addEventListener('click', function() {
+              closeMenu();
+            });
+          }
+          // Auto-close on link click
+          mobileMenuLinks.forEach(function(link) {
+            link.addEventListener('click', function() {
+              closeMenu();
+            });
+          });
+        }
+      })();
+    </script>
+
+    <!-- About Section -->
+    <section id="about" class="max-w-7xl mx-auto py-10 px-2 md:py-16 md:px-4 grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-10 items-center" data-aos="fade-up">
+      <div class="flex justify-center" data-aos="zoom-in-right">
+        <img src="media/logo_pminternational.png" alt="PM-International Logo" class="w-40 h-40 md:w-64 md:h-64 object-contain rounded-xl shadow-card bg-white p-4 md:p-6">
+      </div>
+      <div data-aos="fade-left">
+        <h2 class="text-xl md:text-3xl font-bold text-[#004481] mb-3 md:mb-4">About PM-International & FitLine</h2>
+        <p class="text-base md:text-lg text-gray-700 mb-1 md:mb-2">Pioneers in premium health supplements, designed for real results.</p>
+        <p class="text-sm md:text-base text-gray-600">PM-International is a global leader in health, wellness, and beauty products. FitLine, their flagship brand, is trusted by millions for its science-backed formulas and visible results. Join the movement for a healthier, more vibrant you!</p>
+      </div>
+    </section>
+
+    <!-- Product Highlights Section -->
+    <section id="products" class="bg-[#fff] py-10 px-2 md:py-16 md:px-4" data-aos="fade-up">
+      <div class="max-w-7xl mx-auto">
+        <h2 class="text-xl md:text-3xl font-bold text-[#d91e49] mb-6 md:mb-10 text-center">Our Product Highlights</h2>
+        <div class="flex overflow-x-auto gap-4 md:gap-8 snap-x snap-mandatory pb-4" style="scrollbar-width: thin;">
+          <!-- Product Cards -->
+          <div class="shadow-card rounded-xl bg-[#f5f5f5] p-4 md:p-6 min-w-[240px] md:min-w-[320px] max-w-xs flex flex-col items-center hover-scale snap-start" data-aos="zoom-in" data-aos-delay="100">
+            <img src="media/product_powercocktail.png" alt="Powercocktail" class="w-24 h-24 md:w-32 md:h-32 object-contain mb-3 md:mb-4 cursor-pointer" onclick="showProductModal('powercocktail')">
+            <h3 class="font-semibold text-base md:text-lg text-[#004481] mb-1 md:mb-2 cursor-pointer" onclick="showProductModal('powercocktail')">Powercocktail</h3>
+            <p class="text-gray-700 text-center text-sm md:text-base mb-2 md:mb-4">A daily boost of essential vitamins, minerals, and antioxidants for energy and vitality.</p>
+            <button onclick="showProductModal('powercocktail')" class="footer-cta-btn text-sm md:text-base">Learn More</button>
+          </div>
+          <div class="shadow-card rounded-xl bg-[#f5f5f5] p-4 md:p-6 min-w-[240px] md:min-w-[320px] max-w-xs flex flex-col items-center hover-scale snap-start" data-aos="zoom-in" data-aos-delay="200">
+            <img src="media/product_basics.png" alt="Basics" class="w-24 h-24 md:w-32 md:h-32 object-contain mb-3 md:mb-4 cursor-pointer" onclick="showProductModal('basics')">
+            <h3 class="font-semibold text-base md:text-lg text-[#004481] mb-1 md:mb-2 cursor-pointer" onclick="showProductModal('basics')">Basics</h3>
+            <p class="text-gray-700 text-center text-sm md:text-base mb-2 md:mb-4">Supports gut health and immune function with a unique blend of nutrients and fibers.</p>
+            <button onclick="showProductModal('basics')" class="footer-cta-btn text-sm md:text-base">Learn More</button>
+          </div>
+          <div class="shadow-card rounded-xl bg-[#f5f5f5] p-4 md:p-6 min-w-[240px] md:min-w-[320px] max-w-xs flex flex-col items-center hover-scale snap-start" data-aos="zoom-in" data-aos-delay="300">
+            <img src="media/product_restorate.png" alt="Restorate" class="w-24 h-24 md:w-32 md:h-32 object-contain mb-3 md:mb-4 cursor-pointer" onclick="showProductModal('restorate')">
+            <h3 class="font-semibold text-base md:text-lg text-[#004481] mb-1 md:mb-2 cursor-pointer" onclick="showProductModal('restorate')">Restorate</h3>
+            <p class="text-gray-700 text-center text-sm md:text-base mb-2 md:mb-4">Helps replenish minerals and support better recovery, especially at night.</p>
+            <button onclick="showProductModal('restorate')" class="footer-cta-btn text-sm md:text-base">Learn More</button>
+          </div>
+          <div class="shadow-card rounded-xl bg-[#f5f5f5] p-4 md:p-6 min-w-[240px] md:min-w-[320px] max-w-xs flex flex-col items-center hover-scale snap-start" data-aos="zoom-in" data-aos-delay="400">
+            <img src="media/product_powercocktail_junior.png" alt="Powercocktail Junior" class="w-24 h-24 md:w-32 md:h-32 object-contain mb-3 md:mb-4 cursor-pointer" onclick="showProductModal('powercocktail_junior')">
+            <h3 class="font-semibold text-base md:text-lg text-[#004481] mb-1 md:mb-2 cursor-pointer" onclick="showProductModal('powercocktail_junior')">Powercocktail Junior</h3>
+            <p class="text-gray-700 text-center text-sm md:text-base mb-2 md:mb-4">Specially formulated for kids, with essential nutrients for healthy growth and development.</p>
+            <button onclick="showProductModal('powercocktail_junior')" class="footer-cta-btn text-sm md:text-base">Learn More</button>
+          </div>
+        </div>
+        <div class="flex justify-center mt-8 md:mt-12">
+          <a href="https://www.pmebusiness.com/registrationv2/?TP=3043733" target="_blank" class="inline-flex items-center gap-3 bg-[#d91e49] text-white font-bold px-6 py-3 md:px-8 md:py-4 rounded-full shadow-lg hover:bg-[#004481] transition text-base md:text-lg border-2 border-[#d91e49] hover:border-[#004481]">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 md:w-7 md:h-7"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 3.75l1.5 16.5a1.125 1.125 0 001.125 1.125h13.25a1.125 1.125 0 001.125-1.125l1.5-16.5M6.75 7.5h10.5m-9 4.5h7.5m-6 4.5h4.5" /></svg>
+            Shop Official FitLine Products
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Product Modal (hidden by default) -->
+    <div id="product-modal" class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-60 hidden px-2">
+      <div class="bg-white rounded-2xl shadow-2xl max-w-3xl w-full p-0 relative animate-fadeIn flex flex-col md:flex-row overflow-hidden max-h-[90vh]">
+        <button onclick="closeProductModal()" class="absolute top-3 right-3 text-[#d91e49] text-2xl font-bold hover:text-[#004481] z-20">&times;</button>
+        <div id="modal-content" class="flex flex-col md:flex-row w-full overflow-y-auto">
+          <!-- Dynamic content here -->
+        </div>
+      </div>
+    </div>
+    <script>
+      const productDetails = {
+        powercocktail: {
+          title: 'Powercocktail',
+          img: 'media/product_powercocktail.png',
+          desc: `<p class='mb-4'>Powercocktail is a unique blend of essential vitamins, minerals, antioxidants, and phytonutrients designed to energize your day and support your immune system. Its advanced formula helps you feel your best, every day.</p>
+          <ul class='list-disc pl-5 mb-4 text-gray-700'><li>Supports energy and vitality</li><li>Rich in antioxidants</li><li>Backed by scientific research</li></ul>`
+        },
+        basics: {
+          title: 'Basics',
+          img: 'media/product_basics.png',
+          desc: `<p class='mb-4'>Basics is formulated to promote gut health and immune function with a unique blend of nutrients, fibers, and plant extracts. It’s the foundation for a healthy lifestyle and optimal well-being.</p>
+          <ul class='list-disc pl-5 mb-4 text-gray-700'><li>Promotes gut health</li><li>Supports immune system</li><li>Contains prebiotics and plant extracts</li></ul>`
+        },
+        restorate: {
+          title: 'Restorate',
+          img: 'media/product_restorate.png',
+          desc: `<p class='mb-4'>Restorate helps replenish minerals and support better recovery, especially at night. Ideal for athletes and anyone seeking optimal mineral balance.</p>
+          <ul class='list-disc pl-5 mb-4 text-gray-700'><li>Replenishes essential minerals</li><li>Supports nighttime recovery</li><li>Promotes overall well-being</li></ul>`
+        },
+        powercocktail_junior: {
+          title: 'Powercocktail Junior',
+          img: 'media/product_powercocktail_junior.png',
+          desc: `<p class='mb-4'>Powercocktail Junior is specially designed for children, providing a balanced mix of vitamins, minerals, and phytonutrients to support healthy growth, immune function, and daily vitality.</p>
+          <ul class='list-disc pl-5 mb-4 text-gray-700'><li>Tailored for kids' needs</li><li>Supports growth and development</li><li>Delicious and easy to take</li></ul>`
+        }
+      };
+      function showProductModal(key) {
+        const modal = document.getElementById('product-modal');
+        const content = document.getElementById('modal-content');
+        const prod = productDetails[key];
+        content.innerHTML = `
+          <div class='md:w-1/2 w-full flex items-center justify-center bg-[#f5f5f5] p-8'><img src='${prod.img}' alt='${prod.title}' class='w-full max-w-[480px] max-h-[520px] object-contain rounded-2xl shadow-card'></div>
+          <div class='md:w-1/2 w-full flex flex-col justify-center p-8'>
+            <h2 class='text-2xl font-bold text-[#d91e49] mb-3 text-center md:text-left'>${prod.title}</h2>
+            <div class='text-gray-800 text-base mb-4'>${prod.desc}</div>
+            <a href='https://www.pmebusiness.com/registrationv2/?TP=3043733' target='_blank' class='inline-flex items-center justify-center gap-2 bg-[#d91e49] text-white font-bold px-8 py-4 rounded-full shadow-lg hover:bg-[#004481] hover:text-white border-2 border-[#d91e49] hover:border-[#004481] text-lg transition mt-6 w-full md:w-auto mx-auto md:mx-0'>
+              <svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke-width='1.5' stroke='currentColor' class='w-7 h-7'><path stroke-linecap='round' stroke-linejoin='round' d='M2.25 3.75l1.5 16.5a1.125 1.125 0 001.125 1.125h13.25a1.125 1.125 0 001.125-1.125l1.5-16.5M6.75 7.5h10.5m-9 4.5h7.5m-6 4.5h4.5' /></svg>
+              Buy Now
+            </a>
+          </div>
+        `;
+        modal.classList.remove('hidden');
+      }
+      function closeProductModal() {
+        document.getElementById('product-modal').classList.add('hidden');
+      }
+      // Close modal on ESC
+      document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') closeProductModal();
+      });
+      function toggleExplanation(type) {
+        const el = document.getElementById('explanation-' + type);
+        if (el.classList.contains('hidden')) {
+          el.classList.remove('hidden');
+        } else {
+          el.classList.add('hidden');
+        }
+      }
+    </script>
+
+    <!-- Awards Section (moved to just above footer, with improved design) -->
+    <section id="awards" class="py-10 md:py-16 px-2 md:px-4 bg-gradient-to-r from-[#f5f5f5] via-[#fff] to-[#eaeaea] border-t border-b border-[#eaeaea]" data-aos="fade-up">
+      <div class="max-w-6xl mx-auto">
+        <h2 class="text-xl md:text-3xl font-extrabold text-[#d91e49] mb-6 md:mb-10 text-center tracking-tight">Global Recognition & Awards</h2>
+        <div class="flex flex-wrap justify-center gap-4 md:gap-8">
+          <div class="bg-white rounded-2xl shadow-card p-3 md:p-4 flex flex-col items-center w-40 md:w-60 hover:shadow-lg transition" data-aos="fade-up" data-aos-delay="100">
+            <img src="media/award_dsn_bravo_2025.jpg" alt="DSN Bravo Award 2025" class="w-28 h-20 md:w-40 md:h-28 object-contain mb-2 rounded-lg">
+            <span class="text-xs md:text-sm text-[#004481] font-semibold mt-2">DSN Bravo Award 2025</span>
+          </div>
+          <div class="bg-white rounded-2xl shadow-card p-3 md:p-4 flex flex-col items-center w-40 md:w-60 hover:shadow-lg transition" data-aos="fade-up" data-aos-delay="200">
+            <img src="media/award_german_brand_2024.png" alt="German Brand Award 2024" class="w-28 h-20 md:w-40 md:h-28 object-contain mb-2 rounded-lg">
+            <span class="text-xs md:text-sm text-[#004481] font-semibold mt-2">German Brand Award 2024</span>
+          </div>
+          <div class="bg-white rounded-2xl shadow-card p-3 md:p-4 flex flex-col items-center w-40 md:w-60 hover:shadow-lg transition" data-aos="fade-up" data-aos-delay="300">
+            <img src="media/award_global_rank_6.jpg" alt="Global Rank 6" class="w-28 h-20 md:w-40 md:h-28 object-contain mb-2 rounded-lg">
+            <span class="text-xs md:text-sm text-[#004481] font-semibold mt-2">Global Rank 6</span>
+          </div>
+          <div class="bg-white rounded-2xl shadow-card p-3 md:p-4 flex flex-col items-center w-40 md:w-60 hover:shadow-lg transition" data-aos="fade-up" data-aos-delay="400">
+            <img src="media/award_top100_2025.jpg" alt="Top 100 2025" class="w-28 h-20 md:w-40 md:h-28 object-contain mb-2 rounded-lg">
+            <span class="text-xs md:text-sm text-[#004481] font-semibold mt-2">Top 100 2025</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Certifications Section -->
+    <section id="certifications" class="py-10 md:py-16 px-2 md:px-4 bg-[#fff]" data-aos="fade-up">
+      <div class="max-w-5xl mx-auto">
+        <h2 class="text-xl md:text-3xl font-bold text-[#d91e49] mb-6 md:mb-8 text-center">Certifications</h2>
+        <div class="flex flex-col gap-6 md:gap-10">
+          <!-- Cologne List Certification -->
+          <div class="flex flex-col md:flex-row items-center bg-white rounded-xl shadow-card p-4 md:p-6 gap-4 md:gap-8" data-aos="fade-in" data-aos-delay="100">
+            <img src="media/certification_cologne_list.png" alt="Cologne List Certification" class="w-20 h-20 md:w-32 md:h-32 object-contain rounded-lg shadow-card bg-white p-1 md:p-2 mb-3 md:mb-0">
+            <div class="flex-1 flex flex-col items-start md:items-start">
+              <h3 class="text-lg md:text-xl font-bold text-[#004481] mb-1 md:mb-2">Cologne List</h3>
+              <p class="text-gray-700 text-sm md:text-base mb-2 md:mb-4">Internationally recognized registry of certified products safe for athletes. Free from stimulants, chemical additives, and banned substances.</p>
+              <button onclick="showCertModal('cologne')" class="px-4 py-2 md:px-6 md:py-2 bg-[#d91e49] text-white rounded-full font-semibold shadow hover:bg-[#004481] transition text-sm md:text-base">Learn More</button>
+            </div>
+          </div>
+          <!-- TUV SUD Certification -->
+          <div class="flex flex-col md:flex-row items-center bg-white rounded-xl shadow-card p-4 md:p-6 gap-4 md:gap-8" data-aos="fade-in" data-aos-delay="200">
+            <img src="media/certification_tuv_sud.png" alt="TUV SÜD Certification" class="w-20 h-20 md:w-32 md:h-32 object-contain rounded-lg shadow-card bg-white p-1 md:p-2 mb-3 md:mb-0">
+            <div class="flex-1 flex flex-col items-start md:items-start">
+              <h3 class="text-lg md:text-xl font-bold text-[#004481] mb-1 md:mb-2">TÜV SÜD International Certification</h3>
+              <p class="text-gray-700 text-sm md:text-base mb-2 md:mb-4">150-year-old global leader in testing and certification. Regularly inspects all PM-International products, with public test reports.</p>
+              <button onclick="showCertModal('tuv')" class="px-4 py-2 md:px-6 md:py-2 bg-[#d91e49] text-white rounded-full font-semibold shadow hover:bg-[#004481] transition text-sm md:text-base">Learn More</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Certification Explanation Modals -->
+    <div id="cert-modal-cologne" class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-60 hidden px-2">
+      <div class="bg-white rounded-2xl shadow-2xl max-w-lg w-full p-0 relative animate-fadeIn flex flex-col overflow-hidden max-h-[90vh]">
+        <button onclick="closeCertModal('cologne')" class="absolute top-3 right-3 text-[#d91e49] text-2xl font-bold hover:text-[#004481] z-20">&times;</button>
+        <div class="p-4 md:p-8 overflow-y-auto">
+          <h2 class="text-xl md:text-2xl font-bold text-[#d91e49] mb-3 md:mb-4 text-center">Cologne List</h2>
+          <p class="text-gray-700 text-sm md:text-base mb-3 md:mb-4">The Cologne List is an internationally recognized registry of certified products that can be safely provided to athletes. These products are free from stimulants, chemical additives, and banned pharmaceutical substances.</p>
+          <div class="bg-[#f5f5f5] rounded-lg p-2 md:p-3 mt-2">
+            <span class="font-bold text-[#d91e49] flex items-center mb-1">📌 Explanation</span>
+            <ul class="list-disc pl-5 text-gray-700 text-xs md:text-sm text-left">
+              <li>The Cologne List is an initiative that evaluates nutritional supplements for contamination with banned substances. This gives assurance that:</li>
+              <li>The product is safe for athletes and complies with anti-doping rules.</li>
+              <li>It is free from stimulants, illegal drugs, and risky chemical additives.</li>
+              <li>It's endorsed by international sports bodies, adding trustworthiness to health and fitness products like FitLine.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="cert-modal-tuv" class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-60 hidden px-2">
+      <div class="bg-white rounded-2xl shadow-2xl max-w-lg w-full p-0 relative animate-fadeIn flex flex-col overflow-hidden max-h-[90vh]">
+        <button onclick="closeCertModal('tuv')" class="absolute top-3 right-3 text-[#d91e49] text-2xl font-bold hover:text-[#004481] z-20">&times;</button>
+        <div class="p-4 md:p-8 overflow-y-auto">
+          <h2 class="text-xl md:text-2xl font-bold text-[#d91e49] mb-3 md:mb-4 text-center">TÜV SÜD International Certification</h2>
+          <p class="text-gray-700 text-sm md:text-base mb-3 md:mb-4">TÜV has a history of 150 years and operates 800 testing and inspection facilities worldwide, generating €2.2 billion in annual testing revenue.<br>TÜV's testing standards and results are recognized by 160 international organizations globally.<br>TÜV conducts regular inspections on all PM-International products, and the test reports are made publicly available in QR code format.</p>
+          <div class="bg-[#f5f5f5] rounded-lg p-2 md:p-3 mt-2">
+            <span class="font-bold text-[#d91e49] flex items-center mb-1">📌 Explanation</span>
+            <ul class="list-disc pl-5 text-gray-700 text-xs md:text-sm text-left">
+              <li>This certification statement explains the credibility and global recognition of TÜV SÜD, a renowned German testing and certification body. It reassures customers that:</li>
+              <li>PM-International's products (including FitLine) undergo regular and professional testing.</li>
+              <li>The test results are transparent and accessible via QR codes.</li>
+              <li>TÜV is a 150-year-old organization trusted around the world, which supports the brand’s quality assurance claims.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script>
+      function showCertModal(type) {
+        document.getElementById('cert-modal-' + type).classList.remove('hidden');
+      }
+      function closeCertModal(type) {
+        document.getElementById('cert-modal-' + type).classList.add('hidden');
+      }
+      // Hamburger menu
+      var menuBtn = document.getElementById('menu-btn');
+      var mobileMenu = document.getElementById('mobile-menu');
+      menuBtn.addEventListener('click', () => {
+        mobileMenu.classList.toggle('hidden');
+      });
+    </script>
+
+    <!-- CTA Footer (redesigned, WhatsApp only, more elegant) -->
+    <footer id="contact" class="bg-gradient-to-r from-[#d91e49] to-[#004481] text-white py-8 px-3 md:py-14 md:px-4 mt-0 border-t-4 border-[#eaeaea]">
+      <div class="max-w-5xl mx-auto flex flex-col items-center gap-6 w-full">
+        <a href="https://wa.link/g4eg2o" target="_blank" class="w-full max-w-xs flex items-center justify-center gap-3 bg-[#25d366] hover:bg-[#1bb76e] text-white font-bold text-lg px-6 py-4 rounded-2xl shadow-lg transition border-2 border-[#25d366] hover:border-[#1bb76e]">
+          <img src="media/whatsappicon.png" alt="WhatsApp" class="w-8 h-8"> Contact on WhatsApp
+        </a>
+        <span class="text-sm text-white/80 text-center">Fastest way to reach Nicole for product advice, orders, or support!</span>
+        <div class="flex flex-col items-center gap-1 mt-2">
+          <span class="font-bold text-lg">FitLine with Nicole</span>
+          <span class="text-xs text-white/80">Official PM-International Partner</span>
+          <span class="text-xs text-white/80">Malaysia</span>
+        </div>
+      </div>
+      <p class="text-center text-xs mt-8 opacity-80">&copy; 2025 FitLine with Nicole. All rights reserved.</p>
+    </footer>
+
+    <!-- AOS Animation JS -->
+    <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+    <script>
+      AOS.init({ once: true, duration: 900 });
+      // Hamburger menu
+      var menuBtn = document.getElementById('menu-btn');
+      var mobileMenu = document.getElementById('mobile-menu');
+      menuBtn.addEventListener('click', () => {
+        mobileMenu.classList.toggle('hidden');
+      });
+    </script>
+</body>
+</html>
